@@ -1,6 +1,7 @@
 <?php
 
 use Determined\LaraDev\Console\FacadeMakeCommand;
+use Determined\LaraDev\Console\ServiceMakeCommand;
 use Determined\LaraDev\LaraDevServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
@@ -17,7 +18,7 @@ it('registers commands when running in console', function () {
     $app->shouldReceive('runningInConsole')->andReturnTrue();
 
     $provider = new class ($app) extends LaraDevServiceProvider {
-        public static $commands;
+        public array $commands = [];
 
         #[\Override]
         protected function bootPublishing(): void
@@ -28,14 +29,15 @@ it('registers commands when running in console', function () {
         #[\Override]
         public function commands($commands)
         {
-            self::$commands = $commands;
+            $this->commands = $commands;
         }
     };
 
     $provider->boot();
 
-    expect($provider::$commands)->toEqual([
+    expect($provider->commands)->toEqual([
         FacadeMakeCommand::class,
+        ServiceMakeCommand::class,
     ]);
 });
 
@@ -45,7 +47,7 @@ it('does not register commands when not running in console', function () {
     $app->shouldReceive('runningInConsole')->andReturnFalse();
 
     $provider = new class ($app) extends LaraDevServiceProvider {
-        public static $commands;
+        public array $commands = [];
 
         #[\Override]
         protected function bootPublishing(): void
@@ -56,13 +58,13 @@ it('does not register commands when not running in console', function () {
         #[\Override]
         public function commands($commands)
         {
-            self::$commands = $commands;
+            $this->commands = $commands;
         }
     };
 
     $provider->boot();
 
-    expect($provider::$commands)->toBeEmpty();
+    expect($provider->commands)->toBeEmpty();
 });
 
 it('registers publishable assets when running in console', function () {

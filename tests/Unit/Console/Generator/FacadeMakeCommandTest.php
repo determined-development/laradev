@@ -39,5 +39,5 @@ it('configures arguments', function () {
         ->and($definition->getOption('force')->isArray())->toBeFalse()
         ->and($definition->getOption('force')->isNegatable())->toBeFalse()
         ->and($definition->getOption('force')->getDescription())
-        ->toBe('Create the facade even if the class already exists');
+        ->toBe('Create the class even if the facade already exists');
 });

@@ -3,6 +3,11 @@
     "description": "A collection of Laravel development helpers and utilities",
     "type": "library",
     "license": "MIT",
+    "keywords": [
+        "framework",
+        "laravel",
+        "development"
+    ],
     "authors": [
         {
             "name": "Samuel Levy",
@@ -11,7 +16,6 @@
     ],
     "require": {
         "php": "^8.3",
-        "illuminate/contracts": "^12.0|^13.0",
         "illuminate/support": "^12.0|^13.0"
     },
     "require-dev": {
@@ -22,8 +26,6 @@
         "squizlabs/php_codesniffer": "^4.0",
         "mockery/mockery": "^1.6"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Determined\\LaraDev\\": "src/"
@@ -35,16 +37,7 @@
             "App\\": "tests/app/"
         }
     },
-    "config": {
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
-        }
-    },
     "scripts": {
-        "post-autoload-dump": [
-            "@clear",
-            "@prepare"
-        ],
         "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
         "prepare": "@php vendor/bin/testbench package:discover --ansi",
         "build": "@php vendor/bin/testbench workbench:build --ansi",
@@ -71,10 +64,12 @@
         "test:feat": "@php vendor/bin/pest --testsuite Feature --parallel",
         "test:unit": "@php vendor/bin/pest --testsuite Unit --parallel",
         "test:coverage": [
+            "@clear",
             "@putenv XDEBUG_MODE=coverage",
             "@php vendor/bin/pest --coverage --parallel"
         ],
         "test:mutate": [
+            "@clear",
             "@putenv XDEBUG_MODE=coverage",
             "@php vendor/bin/pest --mutate --parallel"
         ],
@@ -87,9 +82,22 @@
             "@test"
         ]
     },
-    "laravel": {
-        "providers": [
-            "Determined\\LaraDev\\LaraDevServiceProvider"
-        ]
-    }
+    "suggest": {
+        "determined-development/dd-boost": "Laravel boost helpers."
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Determined\\LaraDev\\LaraDevServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

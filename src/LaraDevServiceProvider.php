@@ -3,6 +3,7 @@
 namespace Determined\LaraDev;
 
 use Determined\LaraDev\Console\FacadeMakeCommand;
+use Determined\LaraDev\Console\ServiceMakeCommand;
 use Illuminate\Support\ServiceProvider;
 
 class LaraDevServiceProvider extends ServiceProvider
@@ -12,6 +13,7 @@ class LaraDevServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 FacadeMakeCommand::class,
+                ServiceMakeCommand::class,
             ]);
         }
     }

@@ -19,43 +19,54 @@ composer require --dev determined-development/laradev
 
 ### `make:facade`
 
-You can use this utility to make facades for services in your application.
+You can use this utility to make facades for services in your application. The facade accessor will be guessed from the name of the facade, or can be set explicitly with the `--accessor` or `--target` options. If the accessor, target, or detected service is a class, then a mixin will be added for PHPStan/IDE hinting.
 
 ```bash
 php artisan make:facade Foo
 
   INFO  Facade [app/Support/Facades/Foo.php] created successfully
+  
+php artisan make:facade Foo/Bar --accessor='App\Services\FooBarService'
+
+  INFO  Facade [app/Support/Facades/Foo/Bar.php] created successfully
+  
+php artisan make:facade Fizz/Buzz --accessor='fizzbuzz' --target='App\Services\FizzBuzzService'
+
+  INFO  Facade [app/Support/Facades/Fizz/Buzz.php] created successfully
 ```
 
-The facade accessor will be guessed from the name of the facade, or can be set explicitly with the `--accessor` or `--target` options. If the accessor, target, or detected service is a class, then a mixin will be added for PHPStan/IDE hinting.
+### `make:service`
+
+You can use this utility to make services in your application. You can pass `--facade` to also generate a matching facade. If you don't set the value, it will name the Facade automatically based on the service name.
 
 ```bash
-php artisan make:facade Foo --accessor=foo.service --target=App\Services\FooBarService
+php artisan make:service Foo
+
+  INFO  Service [app/Services/Foo.php] created successfully
+
+php artisan make:service FooService --facade
+
+  INFO  Service [app/Services/FooService.php] created successfully
+  INFO  Facade [app/Support/Facades/Foo.php] created successfully
+
+php artisan make:service Foo/Bar --facade
+
+  INFO  Service [app/Services/Foo/Bar.php] created successfully
+  INFO  Facade [app/Support/Facades/Foo/Bar.php] created successfully
+  
+php artisan make:service Fizz/Buzz --facade=Bing
+
+  INFO  Service [app/Services/Fizz/Buzz.php] created successfully
+  INFO  Facade [app/Support/Facades/Bing.php] created successfully
 ```
-Will generate
 
-```php
-<?php
-
-namespace App\Support\Facades;
-
-use App\Services\FooBarService;
-use Illuminate\Support\Facades\Facade;
-
-/**
- * @mixin FooBarService
- */
-class Foo extends Facade
-{
-    protected static function getFacadeAccessor(): string
-    {
-        return 'foo.service';
-    }
-}
-```
 
 ### Publishing stubs
 
+Stubs can be published with any of the following commands:
+
 ```bash
-php artisan vendor:publish --tag=laradev:stubs
+php artisan vendor:publish --tag=laradev
+php artisan vendor:publish --tag=stubs
+php artisan vendor:publish --provider='Determined\LaraDev\LaraDevServiceProvider' --tag=stubs
 ```
