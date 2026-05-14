@@ -105,6 +105,9 @@ class FacadeMakeCommand extends GeneratorCommand
         return $replacements;
     }
 
+    /**
+     * @return array<int, string|int>[]
+     */
     protected function getOptions(): array
     {
         return [
