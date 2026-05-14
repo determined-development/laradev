@@ -1,0 +1,92 @@
+{
+    "preset": "psr12",
+    "rules": {
+        "blank_line_before_statement": {
+            "statements": [
+                "if",
+                "break",
+                "continue",
+                "declare",
+                "for",
+                "foreach",
+                "return",
+                "switch",
+                "throw",
+                "try"
+            ]
+        },
+        "class_definition": {
+            "single_line": true,
+            "inline_constructor_arguments": false,
+            "space_before_parenthesis": true
+        },
+        "class_attributes_separation": {
+            "elements": {
+                "method": "one"
+            }
+        },
+        "array_syntax": {
+            "syntax": "short"
+        },
+        "ordered_types": {
+            "case_sensitive": true,
+            "null_adjustment": "always_last"
+        },
+        "ordered_class_elements": {
+            "order": [
+                "use_trait",
+                "constant_public",
+                "constant_protected",
+                "constant_private",
+                "case",
+                "property_static",
+                "property_public_readonly",
+                "property_public",
+                "property_protected",
+                "property_private",
+                "construct",
+                "method_static",
+                "method_protected",
+                "method_public",
+                "method_private",
+                "method_abstract",
+                "magic",
+                "destruct",
+                "phpunit"
+            ]
+        },
+        "whitespace_after_comma_in_array": {
+            "ensure_single_space": true
+        },
+        "blank_line_between_import_groups": true,
+        "normalize_index_brace": true,
+        "no_unused_imports": true,
+        "method_chaining_indentation": true,
+        "no_unneeded_import_alias": true,
+        "no_useless_return": true,
+        "ordered_traits": true
+    },
+    "notName": [
+        "_ide_helper_actions.php",
+        "_ide_helper_models.php",
+        "_ide_helper.php",
+        ".phpstorm.meta.php",
+        "*.blade.php",
+        "*.stub",
+        "*.css",
+        "*.scss",
+        "*.js",
+        "*.json",
+        "*.svg",
+        "*.vue"
+    ],
+    "exclude": [
+        ".idea",
+        "coverage",
+        "storage",
+        "bootstrap/cache",
+        "node_modules",
+        "public",
+        "docker"
+    ]
+}

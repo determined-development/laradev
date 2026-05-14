@@ -1,0 +1,31 @@
+# OS artifacts
+Thumbs.db
+.DS_Store
+
+# Testing artifacts
+.phpactor.json
+.phpunit.result.cache
+/.phpunit.cache
+/.php-cs-fixer.cache
+phpunit.xml
+
+# Composer Artifacts
+/vendor/
+/auth.json
+composer.lock
+
+# IDE Artifacts
+/.idea
+/.nova
+/.vscode
+/.zed
+/_ide_macros.php
+_ide_helper.php
+
+# AI Artifacts
+/.codex
+/.cursor/
+/.github/skills/
+/boost.json
+AGENTS.md
+CLAUDE.md

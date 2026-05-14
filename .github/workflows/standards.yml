@@ -1,0 +1,60 @@
+name: Coding Standards
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'src/**/*.php'
+      - 'tests/**/*.php'
+      - 'composer.json'
+      - 'phpcs.xml.dist'
+      - 'phpstan.neon'
+      - 'pint.json'
+      - '.github/workflows/standards.yml'
+  pull_request:
+    types: [ opened, reopened, synchronize ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [8.3, 8.4, 8.5]
+        laravel: ["^12.0", "^13.0"]
+        linter: ['pint', 'phpcs', 'phpstan']
+        dependencies:
+          - "highest"
+          - "lowest"
+        include:
+          - linter: 'pint'
+            params: '--test --format=checkstyle | cs2pr'
+          - linter: 'phpcs'
+            params: './'
+          - linter: 'phpstan'
+            params: 'analyse --error-format=github'
+
+    name: Run ${{ matrix.linter }} - PHP ${{ matrix.php }}/Laravel ${{ matrix.laravel }} ${{ matrix.dependencies == 'highest' && '⬆️' || '⬇️' }}
+
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer, cs2pr
+          coverage: none
+
+      - name: Install dependencies
+        uses: ramsey/composer-install@v4
+        with:
+          dependency-versions: "${{ matrix.dependencies }}"
+          composer-options: "--no-cache --with=illuminate/contracts:${{ matrix.laravel }} --with=illuminate/support:${{ matrix.laravel }}"
+
+      - name: Installed dependencies
+        run: composer show -D
+
+      - name: Run ${{ matrix.linter }}
+        run: php vendor/bin/${{ matrix.linter }} ${{ matrix.params }}

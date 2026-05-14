@@ -1,0 +1,17 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ target }};
+use Illuminate\Support\Facades\Facade;
+
+/**
+ * @mixin {{ alias }}
+ */
+class {{ class }} extends Facade
+{
+    protected static function getFacadeAccessor(): string
+    {
+        return {{ accessor }};
+    }
+}

@@ -1,0 +1,96 @@
+{
+    "name": "determined-development/laradev",
+    "description": "A collection of Laravel development helpers and utilities",
+    "type": "library",
+    "license": "MIT",
+    "version": "0.1.0",
+    "authors": [
+        {
+            "name": "Samuel Levy",
+            "email": "sam@determineddevelopment.com"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "illuminate/contracts": "^12.0|^13.0",
+        "illuminate/support": "^12.0|^13.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^10.0|^11.0",
+        "pestphp/pest": "^4.0",
+        "laravel/pint": "^1.29",
+        "larastan/larastan": "^3.9",
+        "squizlabs/php_codesniffer": "^4.0",
+        "mockery/mockery": "^1.6"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Determined\\LaraDev\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/",
+            "App\\": "tests/app/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@clear",
+            "@prepare"
+        ],
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "@build",
+            "@php vendor/bin/testbench serve --ansi"
+        ],
+        "lint:pint": "@php vendor/bin/pint --test --parallel",
+        "lint:phpcs": "@php vendor/bin/phpcs ./",
+        "lint:types": "@php vendor/bin/phpstan analyse",
+        "lint": [
+            "@lint:pint",
+            "@lint:phpcs",
+            "@lint:types"
+        ],
+        "pint:fix": "@php vendor/bin/pint --parallel",
+        "phpcs:fix": "@php vendor/bin/phpcbf ./",
+        "lint:fix": [
+            "@pint:fix",
+            "@phpcs:fix"
+        ],
+        "test:arch": "@php vendor/bin/pest --testsuite Architecture --parallel",
+        "test:feat": "@php vendor/bin/pest --testsuite Feature --parallel",
+        "test:unit": "@php vendor/bin/pest --testsuite Unit --parallel",
+        "test:coverage": [
+            "@putenv XDEBUG_MODE=coverage",
+            "@php vendor/bin/pest --coverage --parallel"
+        ],
+        "test:mutate": [
+            "@putenv XDEBUG_MODE=coverage",
+            "@php vendor/bin/pest --mutate --parallel"
+        ],
+        "test": [
+            "@clear",
+            "@php vendor/bin/pest --parallel"
+        ],
+        "pre-pr-test": [
+            "@lint",
+            "@test"
+        ]
+    },
+    "laravel": {
+        "providers": [
+            "Determined\\LaraDev\\LaraDevServiceProvider"
+        ]
+    }
+}

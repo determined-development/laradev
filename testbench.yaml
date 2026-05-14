@@ -1,0 +1,5 @@
+laravel: '@testbench'
+
+providers:
+  - Determined\LaraDev\LaraDevServiceProvider
+  - App\Providers\TestAppServiceProvider
