@@ -3,7 +3,6 @@
     "description": "A collection of Laravel development helpers and utilities",
     "type": "library",
     "license": "MIT",
-    "version": "0.1.0",
     "authors": [
         {
             "name": "Samuel Levy",
