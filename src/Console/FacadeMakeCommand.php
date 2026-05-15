@@ -113,7 +113,7 @@ class FacadeMakeCommand extends GeneratorCommand
         return [
             ['target', 't', InputOption::VALUE_REQUIRED, 'Set the target service class'],
             ['accessor', 'a', InputOption::VALUE_REQUIRED, 'Set the facade accessor'],
-            ['force', 'f', InputOption::VALUE_NONE, 'Create the facade even if the class already exists'],
+            ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the facade already exists'],
         ];
     }
 }

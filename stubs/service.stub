@@ -1,0 +1,15 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Container\Attributes\Config;
+use Illuminate\Container\Attributes\Give;
+
+class {{ class }}
+{
+    public function __construct(
+        //
+    ) {
+        //
+    }
+}

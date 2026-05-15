@@ -51,7 +51,7 @@ jobs:
         uses: ramsey/composer-install@v4
         with:
           dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "--no-cache --with=illuminate/contracts:${{ matrix.laravel }} --with=illuminate/support:${{ matrix.laravel }}"
+          composer-options: "--no-cache --with=illuminate/support:${{ matrix.laravel }}"
 
       - name: Installed dependencies
         run: composer show -D
